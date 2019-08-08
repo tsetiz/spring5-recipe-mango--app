@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class IndexControllerTest {
 
 
-    IndexController indexController;
+    private IndexController indexController;
 
     @Mock
     RecipeService recipeService;
@@ -33,15 +33,15 @@ public class IndexControllerTest {
     Model model;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         indexController = new IndexController(recipeService);
     }
 
     @Test
-    public void testMockMVC() throws Exception{
+    public void testMockMVC() throws Exception {
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();
-        mockMvc.perform(get( "/"))
+        mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"));
     }
@@ -56,13 +56,13 @@ public class IndexControllerTest {
         recipe2.setId(4L);
         recipes.add(recipe2);
 
-        when(recipeService.getRecipe()).thenReturn(recipes);
+        when(recipeService.getRecipes()).thenReturn(recipes);
 
         ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
 
         String viewPage = indexController.getIndexPage(model);
         assertEquals("index", viewPage);
-        verify(recipeService, times(1)).getRecipe();
+        verify(recipeService, times(1)).getRecipes();
         verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());
         Set<Recipe> setInController = argumentCaptor.getValue();
         assertEquals(2, setInController.size());
