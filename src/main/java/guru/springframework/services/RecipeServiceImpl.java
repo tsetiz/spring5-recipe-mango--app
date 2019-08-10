@@ -53,6 +53,14 @@ public class RecipeServiceImpl implements RecipeService {
     @Transactional
     @Override
     public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand) {
+
+        //@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe", orphanRemoval = true)
+        //private Set<Ingredient> ingredients = new HashSet<>();
+        // if we add orphanRemoval = true  into the ingredients  set of Recipe  object then update the Recipe via recipeForm ,
+        // all the ingredients  records that associated with the Recipe  are removed in Database.It happens because the form
+        // sends an empty set of ingredients  to server and when the ingredients  is empty, hibernate removes all records in database that
+        // associated with the Recipe. To solve this problem in recipeForm.html we need to bind the ingredient object properly.
+
         Recipe detachedRecipe = recipeCommandToRecipe.convert(recipeCommand);
 
         Recipe savedRecipe = recipeRepository.save(detachedRecipe);

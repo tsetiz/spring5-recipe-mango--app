@@ -8,7 +8,6 @@
           th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
 
     <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
-    <title>Recipe</title>
 </head>
 <body>
 <div class="container-fluid" style="margin-top: 20px">
@@ -103,6 +102,12 @@
                                         ' ' + ingredient.uom.getDescription() +
                                         ' - ' + ingredient.getDescription())}">1 Teaspoon of Sugar
                                         </li>
+                                        <!--todo: proper binding needed to solve form submitting issues-->
+                                        <!--<li th:each="ingredient, itemStat : *{ingredients}">-->
+                                        <!--<input th:field="*{ingredients[__${itemStat.index}__].amount}"/>-->
+                                        <!--<input th:field="*{ingredients[__${itemStat.index}__].uom.description}"/>-->
+                                        <!--<input th:field="*{ingredients[__${itemStat.index}__].description}"/>-->
+                                        <!--</li>-->
                                     </ul>
                                 </div>
                             </div>
