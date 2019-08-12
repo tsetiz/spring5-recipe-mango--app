@@ -32,6 +32,8 @@ public class IndexControllerTest {
     @Mock
     Model model;
 
+    private MockMvc mockMvc;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -40,7 +42,7 @@ public class IndexControllerTest {
 
     @Test
     public void testMockMVC() throws Exception {
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"));
