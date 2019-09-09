@@ -53,11 +53,14 @@ public class IngredientServiceImpl implements IngredientService {
             log.error("Ingredient Id not found. Id: " + ingredientId);
         }
 
+        //enhance command object with recipe id
+        IngredientCommand ingredientCommand = optionalIngredientCommand.get();
+        ingredientCommand.setRecipeId(recipe.getId());
+
         return optionalIngredientCommand.get();
     }
 
     @Override
-    @Transactional
     public IngredientCommand saveIngredientCommand(IngredientCommand command) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(command.getRecipeId());
         if (!recipeOptional.isPresent()) {
@@ -97,26 +100,16 @@ public class IngredientServiceImpl implements IngredientService {
                     .findFirst();
         }
 
-        //to do check for fail
-        return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
+        //todo check for fail
+        //enhance with id value
+        IngredientCommand ingredientCommandSaved = ingredientToIngredientCommand.convert(savedIngredientOptional.get());
+        ingredientCommandSaved.setRecipeId(recipe.getId());
+
+        return ingredientCommandSaved;
     }
 
     @Override
     public void deleteById(String recipeId, String id) {
-
-        //todo
-
-        //deleting an Ingredient with this implementation removes the ingredient from the recipe,
-        // but it does not delete the ingredient itself from the DB. In other words, after deleting an ingredient from a recipe,
-        // the ingredient remains dangling in the DB, not related to any recipe. (Use ingredient repository instead or use orphanRemoval = true)
-
-
-        //@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe", orphanRemoval = true)
-        //private Set<Ingredient> ingredients = new HashSet<>();
-        // if we add orphanRemoval = true  into the ingredients  set of Recipe  object then update the Recipe via recipeForm ,
-        // all the ingredients  records that associated with the Recipe  are removed in Database.It happens because the form
-        // sends an empty set of ingredients  to server and when the ingredients  is empty, hibernate removes all records in database that
-        // associated with the Recipe. To solve this problem in recipeForm.html we need to bind the ingredient object properly.
 
         Optional<Recipe> optionalRecipe = recipeRepository.findById(recipeId);
         if (optionalRecipe.isPresent()) {
@@ -128,7 +121,6 @@ public class IngredientServiceImpl implements IngredientService {
                     .findFirst();
             if (optionalIngredient.isPresent()) {
                 Ingredient ingredient = optionalIngredient.get();
-                ingredient.setRecipe(null);
                 recipe.getIngredients().remove(ingredient);
                 recipeRepository.save(recipe);
             } else {

@@ -146,12 +146,15 @@
                                         ' ' + ingredient.uom.getDescription() +
                                         ' - ' + ingredient.getDescription())}">1 Teaspoon of Sugar
                                         </li>
-                                        <!--todo: proper binding needed to solve form submitting issues-->
-                                        <!--<li th:each="ingredient, itemStat : *{ingredients}">-->
-                                        <!--<input th:field="*{ingredients[__${itemStat.index}__].amount}"/>-->
-                                        <!--<input th:field="*{ingredients[__${itemStat.index}__].uom.description}"/>-->
-                                        <!--<input th:field="*{ingredients[__${itemStat.index}__].description}"/>-->
-                                        <!--</li>-->
+                                        <div th:each="ingredientEach, idx : ${recipe.ingredients}" >
+                                            <input  type="hidden" th:field="*{ingredients[__${idx.index}__].id}" />
+                                            <input  type="hidden" th:field="*{ingredients[__${idx.index}__].description}" />
+                                            <input  type="hidden" th:field="*{ingredients[__${idx.index}__].amount}" />
+                                            <input  type="hidden" th:field="*{ingredients[__${idx.index}__].uom.id}" />
+                                        </div>
+                                        <div th:each="catEach, idx : ${recipe.categories}" >
+                                            <input  type="hidden" th:field="*{categories[__${idx.index}__].id}" />
+                                        </div>
                                     </ul>
                                 </div>
                             </div>
