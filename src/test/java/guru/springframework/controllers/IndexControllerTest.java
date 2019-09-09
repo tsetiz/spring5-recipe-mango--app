@@ -55,7 +55,7 @@ public class IndexControllerTest {
         Recipe recipe1 = new Recipe();
         recipes.add(recipe1);
         Recipe recipe2 = new Recipe();
-        recipe2.setId(4L);
+        recipe2.setId("4");
         recipes.add(recipe2);
 
         when(recipeService.getRecipes()).thenReturn(recipes);

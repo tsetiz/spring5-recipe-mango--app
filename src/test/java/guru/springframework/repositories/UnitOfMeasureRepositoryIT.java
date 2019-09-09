@@ -24,14 +24,14 @@ public class UnitOfMeasureRepositoryIT {
     }
 
     @Test
-   // @DirtiesContext  // reload spring context again for every test
-    public void findByDescription() throws Exception{
+    // @DirtiesContext  // reload spring context again for every test
+    public void findByDescription() throws Exception {
         Optional<UnitOfMeasure> unitOfMeasure = unitOfMeasureRepository.findByDescription("Tablespoon");
         assertEquals("Tablespoon", unitOfMeasure.get().getDescription());
     }
 
     @Test
-    public void findByDescriptionCup() throws Exception{
+    public void findByDescriptionCup() throws Exception {
         Optional<UnitOfMeasure> unitOfMeasure = unitOfMeasureRepository.findByDescription("Cup");
         assertEquals("Cup", unitOfMeasure.get().getDescription());
     }

@@ -30,7 +30,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long ingredientId) {
+    public IngredientCommand findByRecipeIdAndIngredientId(String recipeId, String ingredientId) {
 
         // it would be simpler in case we just search an ingredient by id with the help of IngredientRepository
         // using findByRecipeIdAndId method.
@@ -102,7 +102,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public void deleteById(Long recipeId, Long id) {
+    public void deleteById(String recipeId, String id) {
 
         //todo
 
